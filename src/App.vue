@@ -78,7 +78,7 @@ ol {
   background-color: rgba(255, 255, 255, 0.2);
   position: fixed;
   top: 0;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 .lTitle {
   font-size: 38px;
@@ -178,6 +178,7 @@ input::-webkit-inner-spin-button {
   font-size: 18px;
   border: 0px;
   outline: none;
+  width: 80%;
 }
 </style>
 <template>
