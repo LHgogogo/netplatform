@@ -149,6 +149,8 @@ input::-webkit-inner-spin-button {
   background-size: 100% 100%;
 }
 .loginBox {
+  min-width: 150px;
+  min-height: 338px;
   width: 20%;
   height: 40%;
   position: fixed;
