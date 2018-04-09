@@ -34,7 +34,7 @@ body {
 }
 
 body {
-  font-family: 'Microsoft YaHei';
+  font-family: "Microsoft YaHei";
   font-size: 14px;
   color: white;
 }
@@ -51,7 +51,7 @@ ol {
   list-style: none;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -94,10 +94,10 @@ ol {
 }
 .rightBox {
   width: 46%;
-  height: 100%;
+  height: 85%;
   padding: 20px;
   position: fixed;
-  top: 0;
+  top: 14%;
   right: 0;
   overflow-y: auto;
 }
@@ -182,6 +182,23 @@ input::-webkit-inner-spin-button {
   outline: none;
   width: 80%;
 }
+.rightTopBox {
+  width: 46%;
+  height: 30%;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.leftCenter {
+  width: 20%;
+  height: 50%;
+  margin: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: fixed;
+  bottom: 23%;
+  overflow-y: auto;
+}
 </style>
 <template>
   <div id="app">
@@ -219,12 +236,15 @@ input::-webkit-inner-spin-button {
         </p>
       </div>
     </div>
+    <div class="leftCenter" v-if="showM">
+    
+    </div>
     <div class="leftBottom" v-if="showM">
       <video width="100%" height="100%" autoplay="autoplay" loop="loop" controls="controls">
         <source src="http://s.grandroutes.com/av/30.mp4" type="video/mp4"> 你的浏览器暂不支持视频播放！
       </video>
     </div>
-    <div class="rightBox" v-if="showM">
+    <div class="rightTopBox" v-if="showM">
       <div>
         <p class="rTitle">监控数据情况</p>
         <p style="margin: 10px;">监测编号查询：
@@ -232,6 +252,8 @@ input::-webkit-inner-spin-button {
           <button @click="search()">查询</button>
         </p>
       </div>
+    </div>
+    <div class="rightBox" v-if="showM">
       <div class="chartsBg">
         <div class="chartsBox">
           <p class="title">北斗高精度监测
@@ -273,13 +295,13 @@ input::-webkit-inner-spin-button {
 </template>
 
 <script>
-var moment = require('moment')
-import DATA from '../data.js'
+var moment = require("moment");
+import DATA from "../data.js";
 var icon = [
-  'path://M876 456H697.5L664 288h100c15.5 0 28-12.5 28-28s-12.5-28-28-28H652.8l-24.6-123C623 82.9 600 64 573.3 64H450.7c-26.7 0-49.7 18.9-54.9 45l-24.5 123H260c-15.5 0-28 12.5-28 28s12.5 28 28 28h100l-33.5 168H148c-15.5 0-28 12.5-28 28s12.5 28 28 28h167.3l-82.8 414.9c-0.2 0.9 0.1 1.8 0 2.7-0.2 2-0.2 3.9 0.1 6 0.2 1.7 0.6 3.3 1.1 5 0.6 1.7 1.2 3.3 2.1 4.9 0.9 1.7 2 3.2 3.3 4.6 0.6 0.7 0.9 1.6 1.6 2.3 0.6 0.6 1.4 0.8 2 1.3 1.4 1.1 2.9 2 4.5 2.9 1.7 0.9 3.4 1.6 5.2 2.1 0.8 0.2 1.5 0.8 2.4 1 0.8 0.2 1.6-0.1 2.5-0.1 0.9 0.1 1.7 0.5 2.6 0.5 1 0 2-0.5 3-0.6 1.8-0.2 3.5-0.5 5.2-1 1.8-0.6 3.5-1.3 5.1-2.2 1.6-0.9 3.1-1.9 4.5-3.1 0.8-0.7 1.8-1 2.5-1.8L512 707.1l231.7 244.1c0.4 0.4 0.9 0.5 1.3 0.9 1.8 1.7 3.9 3.1 6.1 4.2 0.9 0.5 1.7 1.2 2.7 1.5 3.2 1.3 6.6 2.1 10.2 2.1 1.7 0 3.4-0.2 5.1-0.5 0.8-0.1 1.4-0.7 2.2-0.9 2-0.5 3.8-1.3 5.6-2.3 1.5-0.8 2.9-1.6 4.2-2.7 0.7-0.5 1.5-0.7 2.1-1.3 0.7-0.7 1-1.7 1.7-2.4 1.2-1.4 2.3-2.9 3.2-4.5 0.9-1.6 1.6-3.2 2.1-4.9 0.5-1.7 0.9-3.3 1.1-5 0.2-1.9 0.2-3.8 0.1-5.7-0.1-1 0.2-1.9 0-2.8L708.7 512H876c15.5 0 28-12.5 28-28s-12.5-28-28-28zM451.3 120h121.5l22.4 112H428.8l22.5-112z m-33.7 168h188.8l33.7 168H383.9l33.7-168zM620 512L512 625.8 404 512h216zM306.5 842.3L364.7 552l108.7 114.5-166.9 175.8z m352.8-290.4l58.2 290.4-166.9-175.9 108.7-114.5z'
-]
+  "path://M876 456H697.5L664 288h100c15.5 0 28-12.5 28-28s-12.5-28-28-28H652.8l-24.6-123C623 82.9 600 64 573.3 64H450.7c-26.7 0-49.7 18.9-54.9 45l-24.5 123H260c-15.5 0-28 12.5-28 28s12.5 28 28 28h100l-33.5 168H148c-15.5 0-28 12.5-28 28s12.5 28 28 28h167.3l-82.8 414.9c-0.2 0.9 0.1 1.8 0 2.7-0.2 2-0.2 3.9 0.1 6 0.2 1.7 0.6 3.3 1.1 5 0.6 1.7 1.2 3.3 2.1 4.9 0.9 1.7 2 3.2 3.3 4.6 0.6 0.7 0.9 1.6 1.6 2.3 0.6 0.6 1.4 0.8 2 1.3 1.4 1.1 2.9 2 4.5 2.9 1.7 0.9 3.4 1.6 5.2 2.1 0.8 0.2 1.5 0.8 2.4 1 0.8 0.2 1.6-0.1 2.5-0.1 0.9 0.1 1.7 0.5 2.6 0.5 1 0 2-0.5 3-0.6 1.8-0.2 3.5-0.5 5.2-1 1.8-0.6 3.5-1.3 5.1-2.2 1.6-0.9 3.1-1.9 4.5-3.1 0.8-0.7 1.8-1 2.5-1.8L512 707.1l231.7 244.1c0.4 0.4 0.9 0.5 1.3 0.9 1.8 1.7 3.9 3.1 6.1 4.2 0.9 0.5 1.7 1.2 2.7 1.5 3.2 1.3 6.6 2.1 10.2 2.1 1.7 0 3.4-0.2 5.1-0.5 0.8-0.1 1.4-0.7 2.2-0.9 2-0.5 3.8-1.3 5.6-2.3 1.5-0.8 2.9-1.6 4.2-2.7 0.7-0.5 1.5-0.7 2.1-1.3 0.7-0.7 1-1.7 1.7-2.4 1.2-1.4 2.3-2.9 3.2-4.5 0.9-1.6 1.6-3.2 2.1-4.9 0.5-1.7 0.9-3.3 1.1-5 0.2-1.9 0.2-3.8 0.1-5.7-0.1-1 0.2-1.9 0-2.8L708.7 512H876c15.5 0 28-12.5 28-28s-12.5-28-28-28zM451.3 120h121.5l22.4 112H428.8l22.5-112z m-33.7 168h188.8l33.7 168H383.9l33.7-168zM620 512L512 625.8 404 512h216zM306.5 842.3L364.7 552l108.7 114.5-166.9 175.8z m352.8-290.4l58.2 290.4-166.9-175.9 108.7-114.5z"
+];
 export default {
-  name: 'app',
+  name: "app",
   data() {
     return {
       ws: null,
@@ -298,26 +320,43 @@ export default {
       },
       wsParam: {},
       showM: false
-    }
+    };
+  },
+  created() {
+    this.checkState();
   },
   mounted() {},
   methods: {
+    checkState() {
+      let state = sessionStorage.getItem("loginState");
+      if (state) {
+        this.showM = true;
+        this.formatData();
+        setTimeout(() => {
+          // this.websocketEvent();
+          this.init();
+          this.setMap();
+          // this.$on('changeParam', this.onParamChange)
+        }, 50);
+      }
+    },
     login() {
-      this.showM = true
-      this.formatData()
+      sessionStorage.setItem("loginState", "true");
+      this.showM = true;
+      this.formatData();
       setTimeout(() => {
         // this.websocketEvent();
-        this.init()
-        this.setMap()
+        this.init();
+        this.setMap();
         // this.$on('changeParam', this.onParamChange)
-      }, 50)
+      }, 50);
     },
     init() {
-      this.myChart = echarts.init(document.getElementById('bigMap'))
-      let charts = document.getElementsByClassName('charts')
-      this.eMaps = []
+      this.myChart = echarts.init(document.getElementById("bigMap"));
+      let charts = document.getElementsByClassName("charts");
+      this.eMaps = [];
       for (var i = 0; i < charts.length; i++) {
-        this.eMaps.push(echarts.init(charts[i]))
+        this.eMaps.push(echarts.init(charts[i]));
       }
       // charts.forEach(ele => {
       //   this.eMaps.push(echarts.init(ele));
@@ -325,47 +364,47 @@ export default {
     },
     setMap() {
       const convertData = (data, type) => {
-        var res = []
-        let dataList = data.slice()
+        var res = [];
+        let dataList = data.slice();
         if (type === 2) {
           dataList = dataList.filter(ele => {
-            return ele.isError
-          })
+            return ele.isError;
+          });
         } else if (type === 1) {
           dataList = dataList.filter(ele => {
-            return !ele.isError
-          })
+            return !ele.isError;
+          });
         }
 
         for (let i = 0; i < dataList.length; i++) {
-          let geoCoord = this.mainChart.geoCoordMap[dataList[i].name]
+          let geoCoord = this.mainChart.geoCoordMap[dataList[i].name];
           if (geoCoord) {
             res.push({
               name: dataList[i].name,
               value: geoCoord.concat([dataList[i].id, dataList[i].num]),
               symbol: type === 3 ? icon[0] : null
-            })
+            });
           }
         }
-        return res
-      }
-      var _this = this
+        return res;
+      };
+      var _this = this;
       var options = {
-        backgroundColor: '#404a59',
+        backgroundColor: "#404a59",
         title: {
-          text: '',
-          left: 'center',
+          text: "",
+          left: "center",
           textStyle: {
-            color: '#fff'
+            color: "#fff"
           }
         },
         tooltip: {
-          trigger: 'item',
+          trigger: "item",
           formatter: function(params) {
-            let num = params.data.value[2]
+            let num = params.data.value[2];
             let temp = `${params.data.name} <br/>
-            监测点编号：${num}`
-            return temp
+            监测点编号：${num}`;
+            return temp;
           }
         },
         bmap: {
@@ -379,144 +418,144 @@ export default {
           mapStyle: {
             styleJson: [
               {
-                featureType: 'water',
-                elementType: 'all',
+                featureType: "water",
+                elementType: "all",
                 stylers: {
-                  color: '#021019'
+                  color: "#021019"
                 }
               },
               {
-                featureType: 'highway',
-                elementType: 'geometry.fill',
+                featureType: "highway",
+                elementType: "geometry.fill",
                 stylers: {
-                  color: '#000000'
+                  color: "#000000"
                 }
               },
               {
-                featureType: 'highway',
-                elementType: 'geometry.stroke',
+                featureType: "highway",
+                elementType: "geometry.stroke",
                 stylers: {
-                  color: '#147a92'
+                  color: "#147a92"
                 }
               },
               {
-                featureType: 'arterial',
-                elementType: 'geometry.fill',
+                featureType: "arterial",
+                elementType: "geometry.fill",
                 stylers: {
-                  color: '#000000'
+                  color: "#000000"
                 }
               },
               {
-                featureType: 'arterial',
-                elementType: 'geometry.stroke',
+                featureType: "arterial",
+                elementType: "geometry.stroke",
                 stylers: {
-                  color: '#0b3d51'
+                  color: "#0b3d51"
                 }
               },
               {
-                featureType: 'local',
-                elementType: 'geometry',
+                featureType: "local",
+                elementType: "geometry",
                 stylers: {
-                  color: '#000000'
+                  color: "#000000"
                 }
               },
               {
-                featureType: 'land',
-                elementType: 'all',
+                featureType: "land",
+                elementType: "all",
                 stylers: {
-                  color: '#08304b'
+                  color: "#08304b"
                 }
               },
               {
-                featureType: 'railway',
-                elementType: 'geometry.fill',
+                featureType: "railway",
+                elementType: "geometry.fill",
                 stylers: {
-                  color: '#000000'
+                  color: "#000000"
                 }
               },
               {
-                featureType: 'railway',
-                elementType: 'geometry.stroke',
+                featureType: "railway",
+                elementType: "geometry.stroke",
                 stylers: {
-                  color: '#08304b'
+                  color: "#08304b"
                 }
               },
               {
-                featureType: 'subway',
-                elementType: 'geometry',
+                featureType: "subway",
+                elementType: "geometry",
                 stylers: {
                   lightness: -70
                 }
               },
               {
-                featureType: 'building',
-                elementType: 'geometry.fill',
+                featureType: "building",
+                elementType: "geometry.fill",
                 stylers: {
-                  color: '#000000'
+                  color: "#000000"
                 }
               },
               {
-                featureType: 'all',
-                elementType: 'labels.text.fill',
+                featureType: "all",
+                elementType: "labels.text.fill",
                 stylers: {
-                  color: '#857f7f'
+                  color: "#857f7f"
                 }
               },
               {
-                featureType: 'all',
-                elementType: 'labels.text.stroke',
+                featureType: "all",
+                elementType: "labels.text.stroke",
                 stylers: {
-                  color: '#000000'
+                  color: "#000000"
                 }
               },
               {
-                featureType: 'building',
-                elementType: 'geometry',
+                featureType: "building",
+                elementType: "geometry",
                 stylers: {
-                  color: '#022338'
+                  color: "#022338"
                 }
               },
               {
-                featureType: 'green',
-                elementType: 'geometry',
+                featureType: "green",
+                elementType: "geometry",
                 stylers: {
-                  color: '#062032'
+                  color: "#062032"
                 }
               },
               {
-                featureType: 'boundary',
-                elementType: 'all',
+                featureType: "boundary",
+                elementType: "all",
                 stylers: {
-                  color: '#1e1c1c'
+                  color: "#1e1c1c"
                 }
               },
               {
-                featureType: 'manmade',
-                elementType: 'geometry',
+                featureType: "manmade",
+                elementType: "geometry",
                 stylers: {
-                  color: '#022338'
+                  color: "#022338"
                 }
               },
               {
-                featureType: 'poi',
-                elementType: 'all',
+                featureType: "poi",
+                elementType: "all",
                 stylers: {
-                  visibility: 'off'
+                  visibility: "off"
                 }
               },
               {
-                featureType: 'all',
-                elementType: 'labels.icon',
+                featureType: "all",
+                elementType: "labels.icon",
                 stylers: {
-                  visibility: 'off'
+                  visibility: "off"
                 }
               },
               {
-                featureType: 'all',
-                elementType: 'labels.text.fill',
+                featureType: "all",
+                elementType: "labels.text.fill",
                 stylers: {
-                  color: '#2da0c6',
-                  visibility: 'on'
+                  color: "#2da0c6",
+                  visibility: "on"
                 }
               }
             ]
@@ -524,27 +563,27 @@ export default {
         },
         series: [
           {
-            name: '蓝', //气球
-            type: 'scatter',
-            coordinateSystem: 'bmap',
-            symbol: 'pin', //气泡
+            name: "蓝", //气球
+            type: "scatter",
+            coordinateSystem: "bmap",
+            symbol: "pin", //气泡
             symbolSize: 50,
-            symbolOffset: [0, '-15%'],
+            symbolOffset: [0, "-15%"],
             label: {
               normal: {
                 show: true,
                 formatter: function(params) {
-                  return params.data.value[3]
+                  return params.data.value[3];
                 },
                 textStyle: {
-                  color: '#fff',
+                  color: "#fff",
                   fontSize: 9
                 }
               }
             },
             itemStyle: {
               normal: {
-                color: 'blue'
+                color: "blue"
                 //气球颜色
               }
             },
@@ -552,27 +591,27 @@ export default {
             data: convertData(this.mainChart.data, 1)
           },
           {
-            name: '红', //气球
-            type: 'scatter',
-            coordinateSystem: 'bmap',
-            symbol: 'pin', //气泡
+            name: "红", //气球
+            type: "scatter",
+            coordinateSystem: "bmap",
+            symbol: "pin", //气泡
             symbolSize: 50,
-            symbolOffset: [0, '-15%'],
+            symbolOffset: [0, "-15%"],
             label: {
               normal: {
                 show: true,
                 formatter: function(params) {
-                  return params.data.value[3]
+                  return params.data.value[3];
                 },
                 textStyle: {
-                  color: '#fff',
+                  color: "#fff",
                   fontSize: 9
                 }
               }
             },
             itemStyle: {
               normal: {
-                color: 'red'
+                color: "red"
                 //气球颜色
               }
             },
@@ -580,65 +619,65 @@ export default {
             data: convertData(this.mainChart.data, 2)
           },
           {
-            name: 'Top', //底部
-            type: 'scatter',
-            coordinateSystem: 'bmap',
+            name: "Top", //底部
+            type: "scatter",
+            coordinateSystem: "bmap",
             data: convertData(this.mainChart.data, 3),
             symbolSize: function(val) {
-              let size = 20
-              return size
+              let size = 20;
+              return size;
             },
             hoverAnimation: true,
             label: {
               normal: {
-                formatter: '{b}',
-                position: 'right',
+                formatter: "{b}",
+                position: "right",
                 show: true
               }
             },
             itemStyle: {
               normal: {
                 color: function(args) {
-                  let color = '#fff'
+                  let color = "#fff";
 
-                  return color
+                  return color;
                 },
                 shadowBlur: 10,
-                shadowColor: '#333'
+                shadowColor: "#333"
               }
             },
             zlevel: 100
           }
         ]
-      }
-      this.myChart.setOption(options, true)
-      this.myChart.on('click', function(params) {
-        console.log(params)
-        _this.id = params.value[2]
-      })
+      };
+      this.myChart.setOption(options, true);
+      this.myChart.on("click", function(params) {
+        console.log(params);
+        _this.id = params.value[2];
+      });
       setTimeout(() => {
-        this.bindMapListen()
-      }, 500)
+        this.bindMapListen();
+      }, 500);
 
       let arrO = [
         {
           title: {},
           tooltip: {
-            trigger: 'axis'
+            trigger: "axis"
           },
           legend: {
             data: [
               {
-                name: '东',
-                icon: 'triangle'
+                name: "东",
+                icon: "triangle"
               },
               {
-                name: '北',
-                icon: 'diamond'
+                name: "北",
+                icon: "diamond"
               },
               {
-                name: '天',
-                icon: 'diamond'
+                name: "天",
+                icon: "diamond"
               }
             ],
             top: 20,
@@ -646,42 +685,42 @@ export default {
             itemWidth: 10,
             itemHeight: 10,
             textStyle: {
-              color: 'white'
+              color: "white"
             }
           },
           dataZoom: [
             {
-              type: 'slider',
+              type: "slider",
               show: true,
               xAxisIndex: [0],
               start: 0,
               end: 100
             },
             {
-              type: 'inside',
+              type: "inside",
               xAxisIndex: [0],
               start: 0,
               end: 100
             }
           ],
           xAxis: {
-            type: 'category',
+            type: "category",
             boundaryGap: true, //留白
             data: this.bChart[0].xDate,
             axisLabel: {
               textStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               },
               margin: 10,
               rotate: 45,
               formatter: function(value) {
-                return moment(value).format('YYYY-MM-DD')
+                return moment(value).format("YYYY-MM-DD");
               }
             },
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               }
             },
             axisTick: {
@@ -690,16 +729,16 @@ export default {
             }
           },
           yAxis: {
-            type: 'value',
-            name: '指定房屋平均偏移值（MM）',
-            nameLocation: 'middle',
+            type: "value",
+            name: "指定房屋平均偏移值（MM）",
+            nameLocation: "middle",
             nameGap: 40,
             nameTextStyle: {
-              color: 'skyblue',
+              color: "skyblue",
               fontSize: 12
             },
             axisLabel: {
-              color: 'skyblue'
+              color: "skyblue"
             },
             axisLine: {
               show: false
@@ -710,16 +749,16 @@ export default {
           },
           series: [
             {
-              name: '东',
-              type: 'line',
+              name: "东",
+              type: "line",
               smooth: true,
               data: this.bChart[0].xData.d,
               showAllSymbol: true,
-              symbol: 'triangle',
+              symbol: "triangle",
               symbolSize: 10,
               itemStyle: {
                 normal: {
-                  color: 'blue'
+                  color: "blue"
                 }
               },
               lineStyle: {
@@ -729,16 +768,16 @@ export default {
               }
             },
             {
-              name: '北',
-              type: 'line',
+              name: "北",
+              type: "line",
               smooth: true,
               data: this.bChart[0].xData.b,
               showAllSymbol: true,
-              symbol: 'diamond',
+              symbol: "diamond",
               symbolSize: 10,
               itemStyle: {
                 normal: {
-                  color: 'orange'
+                  color: "orange"
                 }
               },
               lineStyle: {
@@ -748,16 +787,16 @@ export default {
               }
             },
             {
-              name: '天',
-              type: 'line',
+              name: "天",
+              type: "line",
               smooth: true,
               data: this.bChart[0].xData.t,
               showAllSymbol: true,
-              symbol: 'diamond',
+              symbol: "diamond",
               symbolSize: 10,
               itemStyle: {
                 normal: {
-                  color: 'pink'
+                  color: "pink"
                 }
               },
               lineStyle: {
@@ -771,17 +810,17 @@ export default {
         {
           title: {},
           tooltip: {
-            trigger: 'axis'
+            trigger: "axis"
           },
           legend: {
             data: [
               {
-                name: 'X',
-                icon: 'diamond'
+                name: "X",
+                icon: "diamond"
               },
               {
-                name: 'Y',
-                icon: 'triangle'
+                name: "Y",
+                icon: "triangle"
               }
             ],
             top: 20,
@@ -789,42 +828,42 @@ export default {
             itemWidth: 10,
             itemHeight: 10,
             textStyle: {
-              color: 'white'
+              color: "white"
             }
           },
           dataZoom: [
             {
-              type: 'slider',
+              type: "slider",
               show: true,
               xAxisIndex: [0],
               start: 0,
               end: 100
             },
             {
-              type: 'inside',
+              type: "inside",
               xAxisIndex: [0],
               start: 0,
               end: 100
             }
           ],
           xAxis: {
-            type: 'category',
+            type: "category",
             boundaryGap: true,
             data: this.sChart[0].xDate,
             axisLabel: {
               textStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               },
               margin: 10,
               rotate: 45,
               formatter: function(value) {
-                return moment(value).format('YYYY-MM-DD')
+                return moment(value).format("YYYY-MM-DD");
               }
             },
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               }
             },
             axisTick: {
@@ -833,16 +872,16 @@ export default {
             }
           },
           yAxis: {
-            type: 'value',
-            name: '房屋倾斜率变化',
-            nameLocation: 'middle',
+            type: "value",
+            name: "房屋倾斜率变化",
+            nameLocation: "middle",
             nameGap: 40,
             nameTextStyle: {
-              color: 'skyblue',
+              color: "skyblue",
               fontSize: 12
             },
             axisLabel: {
-              color: 'skyblue'
+              color: "skyblue"
             },
             axisLine: {
               show: false
@@ -853,16 +892,16 @@ export default {
           },
           series: [
             {
-              name: 'X',
-              type: 'line',
+              name: "X",
+              type: "line",
               smooth: true,
               data: this.sChart[0].xData.x,
               showAllSymbol: true,
-              symbol: 'diamond',
+              symbol: "diamond",
               symbolSize: 10,
               itemStyle: {
                 normal: {
-                  color: 'blue'
+                  color: "blue"
                 }
               },
               lineStyle: {
@@ -872,16 +911,16 @@ export default {
               }
             },
             {
-              name: 'Y',
-              type: 'line',
+              name: "Y",
+              type: "line",
               smooth: true,
               data: this.sChart[0].xData.y,
               showAllSymbol: true,
-              symbol: 'triangle',
+              symbol: "triangle",
               symbolSize: 10,
               itemStyle: {
                 normal: {
-                  color: 'orange'
+                  color: "orange"
                 }
               },
               lineStyle: {
@@ -895,41 +934,41 @@ export default {
         {
           title: {},
           tooltip: {
-            trigger: 'axis'
+            trigger: "axis"
           },
           dataZoom: [
             {
-              type: 'slider',
+              type: "slider",
               show: true,
               xAxisIndex: [0],
               start: 0,
               end: 100
             },
             {
-              type: 'inside',
+              type: "inside",
               xAxisIndex: [0],
               start: 0,
               end: 100
             }
           ],
           xAxis: {
-            type: 'category',
+            type: "category",
             boundaryGap: false,
             data: this.wChart.xDate,
             axisLabel: {
               textStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               },
               margin: 10,
               rotate: 45,
               formatter: function(value) {
-                return moment(value).format('YYYY-MM-DD')
+                return moment(value).format("YYYY-MM-DD");
               }
             },
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               }
             },
             axisTick: {
@@ -938,16 +977,16 @@ export default {
             }
           },
           yAxis: {
-            type: 'value',
-            name: '裂缝宽度变化(mm)',
-            nameLocation: 'middle',
+            type: "value",
+            name: "裂缝宽度变化(mm)",
+            nameLocation: "middle",
             nameGap: 40,
             nameTextStyle: {
-              color: 'skyblue',
+              color: "skyblue",
               fontSize: 12
             },
             axisLabel: {
-              color: 'skyblue'
+              color: "skyblue"
             },
             axisLine: {
               show: false
@@ -958,18 +997,18 @@ export default {
           },
           series: [
             {
-              name: '风速数据',
-              type: 'line',
+              name: "风速数据",
+              type: "line",
               smooth: true,
               data: this.wChart.xData.d,
               showAllSymbol: true,
-              symbol: 'triangle',
+              symbol: "triangle",
               symbolSize: 10,
               lineStyle: {
                 normal: {
-                  color: 'blue',
+                  color: "blue",
                   width: 0,
-                  type: 'dotted'
+                  type: "dotted"
                 }
               }
             }
@@ -978,41 +1017,41 @@ export default {
         {
           title: {},
           tooltip: {
-            trigger: 'axis'
+            trigger: "axis"
           },
           dataZoom: [
             {
-              type: 'slider',
+              type: "slider",
               show: true,
               xAxisIndex: [0],
               start: 0,
               end: 100
             },
             {
-              type: 'inside',
+              type: "inside",
               xAxisIndex: [0],
               start: 0,
               end: 100
             }
           ],
           xAxis: {
-            type: 'category',
+            type: "category",
             boundaryGap: false,
             data: this.tChart.xDate,
             axisLabel: {
               textStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               },
               margin: 10,
               rotate: 45,
               formatter: function(value) {
-                return moment(value).format('YYYY-MM-DD')
+                return moment(value).format("YYYY-MM-DD");
               }
             },
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               }
             },
             axisTick: {
@@ -1021,16 +1060,16 @@ export default {
             }
           },
           yAxis: {
-            type: 'value',
-            name: '裂缝宽度变化(mm)',
-            nameLocation: 'middle',
+            type: "value",
+            name: "裂缝宽度变化(mm)",
+            nameLocation: "middle",
             nameGap: 40,
             nameTextStyle: {
-              color: 'skyblue',
+              color: "skyblue",
               fontSize: 12
             },
             axisLabel: {
-              color: 'skyblue'
+              color: "skyblue"
             },
             axisLine: {
               show: false
@@ -1041,18 +1080,18 @@ export default {
           },
           series: [
             {
-              name: '温度数据',
-              type: 'line',
+              name: "温度数据",
+              type: "line",
               smooth: true,
               data: this.tChart.xData.d,
               showAllSymbol: true,
-              symbol: 'triangle',
+              symbol: "triangle",
               symbolSize: 10,
               lineStyle: {
                 normal: {
-                  color: 'blue',
+                  color: "blue",
                   width: 0,
-                  type: 'dotted'
+                  type: "dotted"
                 }
               }
             }
@@ -1061,41 +1100,41 @@ export default {
         {
           title: {},
           tooltip: {
-            trigger: 'axis'
+            trigger: "axis"
           },
           dataZoom: [
             {
-              type: 'slider',
+              type: "slider",
               show: true,
               xAxisIndex: [0],
               start: 0,
               end: 100
             },
             {
-              type: 'inside',
+              type: "inside",
               xAxisIndex: [0],
               start: 0,
               end: 100
             }
           ],
           xAxis: {
-            type: 'category',
+            type: "category",
             boundaryGap: false,
             data: this.hChart.xDate,
             axisLabel: {
               textStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               },
               margin: 10,
               rotate: 45,
               formatter: function(value) {
-                return moment(value).format('YYYY-MM-DD')
+                return moment(value).format("YYYY-MM-DD");
               }
             },
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: 'skyblue'
+                color: "skyblue"
               }
             },
             axisTick: {
@@ -1104,16 +1143,16 @@ export default {
             }
           },
           yAxis: {
-            type: 'value',
-            name: '裂缝宽度变化(mm)',
-            nameLocation: 'middle',
+            type: "value",
+            name: "裂缝宽度变化(mm)",
+            nameLocation: "middle",
             nameGap: 40,
             nameTextStyle: {
-              color: 'skyblue',
+              color: "skyblue",
               fontSize: 12
             },
             axisLabel: {
-              color: 'skyblue'
+              color: "skyblue"
             },
             axisLine: {
               show: false
@@ -1124,76 +1163,78 @@ export default {
           },
           series: [
             {
-              name: '湿度数据',
-              type: 'line',
+              name: "湿度数据",
+              type: "line",
               smooth: true,
               data: this.hChart.xData.d,
               showAllSymbol: true,
-              symbol: 'triangle',
+              symbol: "triangle",
               symbolSize: 10,
               lineStyle: {
                 normal: {
-                  color: 'blue',
+                  color: "blue",
                   width: 0,
-                  type: 'dotted'
+                  type: "dotted"
                 }
               }
             }
           ]
         }
-      ]
+      ];
       this.eMaps.forEach((ele, idx) => {
-        ele.setOption(arrO[idx], true)
-      })
+        ele.setOption(arrO[idx], true);
+      });
     },
     bindMapListen() {
       var bmap = this.myChart
         .getModel()
-        .getComponent('bmap')
-        .getBMap()
-      bmap.addControl(new BMap.MapTypeControl())
-      bmap.addControl(new BMap.ScaleControl())
+        .getComponent("bmap")
+        .getBMap();
+      bmap.addControl(new BMap.MapTypeControl());
+      bmap.addControl(new BMap.ScaleControl());
 
-      bmap.enableAutoResize()
-      bmap.addEventListener('zoomend', (type, target) => {
-        this.mainChart.zoom = bmap.getZoom()
-        this.mainChart.center = [bmap.getCenter().lng, bmap.getCenter().lat]
-        this.$emit('changeParam', { mapZoom: this.mainChart.zoom })
-      })
-      bmap.addEventListener('click', function(type) {
-        return false
-      })
+      bmap.enableAutoResize();
+      bmap.addEventListener("zoomend", (type, target) => {
+        this.mainChart.zoom = bmap.getZoom();
+        this.mainChart.center = [bmap.getCenter().lng, bmap.getCenter().lat];
+        this.$emit("changeParam", { mapZoom: this.mainChart.zoom });
+      });
+      bmap.addEventListener("click", function(type) {
+        return false;
+      });
     },
     search() {
-      console.log(this.id)
+      console.log(this.id);
       // this.setMap()
     },
     change(type) {
-      let dataArr = type === 1 ? this.bChart : this.sChart
-      let isFirst = type === 1 ? this.arrUse.bFirst : this.arrUse.sFirst
-      let obj = isFirst ? dataArr[1] : dataArr[0]
-      this.arrUse.bFirst = type === 1 ? !this.arrUse.bFirst : this.arrUse.bFirst
-      this.arrUse.sFirst = type === 2 ? !this.arrUse.sFirst : this.arrUse.sFirst
+      let dataArr = type === 1 ? this.bChart : this.sChart;
+      let isFirst = type === 1 ? this.arrUse.bFirst : this.arrUse.sFirst;
+      let obj = isFirst ? dataArr[1] : dataArr[0];
+      this.arrUse.bFirst =
+        type === 1 ? !this.arrUse.bFirst : this.arrUse.bFirst;
+      this.arrUse.sFirst =
+        type === 2 ? !this.arrUse.sFirst : this.arrUse.sFirst;
       let option =
         type === 1
           ? {
               title: {},
               tooltip: {
-                trigger: 'axis'
+                trigger: "axis"
               },
               legend: {
                 data: [
                   {
-                    name: '东',
-                    icon: 'triangle'
+                    name: "东",
+                    icon: "triangle"
                   },
                   {
-                    name: '北',
-                    icon: 'diamond'
+                    name: "北",
+                    icon: "diamond"
                   },
                   {
-                    name: '天',
-                    icon: 'diamond'
+                    name: "天",
+                    icon: "diamond"
                   }
                 ],
                 top: 20,
@@ -1201,42 +1242,42 @@ export default {
                 itemWidth: 10,
                 itemHeight: 10,
                 textStyle: {
-                  color: 'white'
+                  color: "white"
                 }
               },
               dataZoom: [
                 {
-                  type: 'slider',
+                  type: "slider",
                   show: true,
                   xAxisIndex: [0],
                   start: 0,
                   end: 100
                 },
                 {
-                  type: 'inside',
+                  type: "inside",
                   xAxisIndex: [0],
                   start: 0,
                   end: 100
                 }
               ],
               xAxis: {
-                type: 'category',
+                type: "category",
                 boundaryGap: true, //留白
                 data: obj.xDate,
                 axisLabel: {
                   textStyle: {
-                    color: 'skyblue'
+                    color: "skyblue"
                   },
                   margin: 10,
                   rotate: 45,
                   formatter: function(value) {
-                    return moment(value).format('YYYY-MM-DD')
+                    return moment(value).format("YYYY-MM-DD");
                   }
                 },
                 axisLine: {
                   onZero: false,
                   lineStyle: {
-                    color: 'skyblue'
+                    color: "skyblue"
                   }
                 },
                 axisTick: {
@@ -1245,16 +1286,16 @@ export default {
                 }
               },
               yAxis: {
-                type: 'value',
-                name: '指定房屋平均偏移值（MM）',
-                nameLocation: 'middle',
+                type: "value",
+                name: "指定房屋平均偏移值（MM）",
+                nameLocation: "middle",
                 nameGap: 40,
                 nameTextStyle: {
-                  color: 'skyblue',
+                  color: "skyblue",
                   fontSize: 12
                 },
                 axisLabel: {
-                  color: 'skyblue'
+                  color: "skyblue"
                 },
                 axisLine: {
                   show: false
@@ -1265,16 +1306,16 @@ export default {
               },
               series: [
                 {
-                  name: '东',
-                  type: 'line',
+                  name: "东",
+                  type: "line",
                   smooth: true,
                   data: obj.xData.d,
                   showAllSymbol: true,
-                  symbol: 'triangle',
+                  symbol: "triangle",
                   symbolSize: 10,
                   itemStyle: {
                     normal: {
-                      color: 'blue'
+                      color: "blue"
                     }
                   },
                   lineStyle: {
@@ -1284,16 +1325,16 @@ export default {
                   }
                 },
                 {
-                  name: '北',
-                  type: 'line',
+                  name: "北",
+                  type: "line",
                   smooth: true,
                   data: obj.xData.b,
                   showAllSymbol: true,
-                  symbol: 'diamond',
+                  symbol: "diamond",
                   symbolSize: 10,
                   itemStyle: {
                     normal: {
-                      color: 'orange'
+                      color: "orange"
                     }
                   },
                   lineStyle: {
@@ -1303,16 +1344,16 @@ export default {
                   }
                 },
                 {
-                  name: '天',
-                  type: 'line',
+                  name: "天",
+                  type: "line",
                   smooth: true,
                   data: obj.xData.t,
                   showAllSymbol: true,
-                  symbol: 'diamond',
+                  symbol: "diamond",
                   symbolSize: 10,
                   itemStyle: {
                     normal: {
-                      color: 'pink'
+                      color: "pink"
                     }
                   },
                   lineStyle: {
@@ -1326,17 +1367,17 @@ export default {
           : {
               title: {},
               tooltip: {
-                trigger: 'axis'
+                trigger: "axis"
               },
               legend: {
                 data: [
                   {
-                    name: 'X',
-                    icon: 'diamond'
+                    name: "X",
+                    icon: "diamond"
                   },
                   {
-                    name: 'Y',
-                    icon: 'triangle'
+                    name: "Y",
+                    icon: "triangle"
                   }
                 ],
                 top: 20,
@@ -1344,42 +1385,42 @@ export default {
                 itemWidth: 10,
                 itemHeight: 10,
                 textStyle: {
-                  color: 'white'
+                  color: "white"
                 }
               },
               dataZoom: [
                 {
-                  type: 'slider',
+                  type: "slider",
                   show: true,
                   xAxisIndex: [0],
                   start: 0,
                   end: 100
                 },
                 {
-                  type: 'inside',
+                  type: "inside",
                   xAxisIndex: [0],
                   start: 0,
                   end: 100
                 }
               ],
               xAxis: {
-                type: 'category',
+                type: "category",
                 boundaryGap: true,
                 data: obj.xDate,
                 axisLabel: {
                   textStyle: {
-                    color: 'skyblue'
+                    color: "skyblue"
                   },
                   margin: 10,
                   rotate: 45,
                   formatter: function(value) {
-                    return moment(value).format('YYYY-MM-DD')
+                    return moment(value).format("YYYY-MM-DD");
                   }
                 },
                 axisLine: {
                   onZero: false,
                   lineStyle: {
-                    color: 'skyblue'
+                    color: "skyblue"
                   }
                 },
                 axisTick: {
@@ -1388,16 +1429,16 @@ export default {
                 }
               },
               yAxis: {
-                type: 'value',
-                name: '房屋倾斜率变化',
-                nameLocation: 'middle',
+                type: "value",
+                name: "房屋倾斜率变化",
+                nameLocation: "middle",
                 nameGap: 40,
                 nameTextStyle: {
-                  color: 'skyblue',
+                  color: "skyblue",
                   fontSize: 12
                 },
                 axisLabel: {
-                  color: 'skyblue'
+                  color: "skyblue"
                 },
                 axisLine: {
                   show: false
@@ -1408,16 +1449,16 @@ export default {
               },
               series: [
                 {
-                  name: 'X',
-                  type: 'line',
+                  name: "X",
+                  type: "line",
                   smooth: true,
                   data: obj.xData.x,
                   showAllSymbol: true,
-                  symbol: 'diamond',
+                  symbol: "diamond",
                   symbolSize: 10,
                   itemStyle: {
                     normal: {
-                      color: 'blue'
+                      color: "blue"
                     }
                   },
                   lineStyle: {
@@ -1427,16 +1468,16 @@ export default {
                   }
                 },
                 {
-                  name: 'Y',
-                  type: 'line',
+                  name: "Y",
+                  type: "line",
                   smooth: true,
                   data: obj.xData.y,
                   showAllSymbol: true,
-                  symbol: 'triangle',
+                  symbol: "triangle",
                   symbolSize: 10,
                   itemStyle: {
                     normal: {
-                      color: 'orange'
+                      color: "orange"
                     }
                   },
                   lineStyle: {
@@ -1446,44 +1487,52 @@ export default {
                   }
                 }
               ]
-            }
+            };
 
-      this.eMaps[type - 1].setOption(option, true)
+      this.eMaps[type - 1].setOption(option, true);
     },
     websocketEvent() {
-      this.ws = new WebSocket('wss://echo.websocket.org')
+      this.ws = new WebSocket("wss://echo.websocket.org");
       this.ws.onopen = evt => {
-        this.ws.send(JSON.stringify(this.wsParam))
+        this.ws.send(JSON.stringify(this.wsParam));
         // setInterval(() => {
         //   this.ws.send("北京时间：" + moment().format("YY-HH-dd hh:mm:ss"));
         // }, 1000);
-      }
+      };
       this.ws.onmessage = evt => {
-        console.log(evt.data)
+        console.log(evt.data);
         // this.formatData(eval('(' + evt.data + ')'))
-        this.formatData(data) //evt.data
-      }
+        this.formatData(data); //evt.data
+      };
 
-      this.ws.onclose = evt => {}
+      this.ws.onclose = evt => {};
     },
     formatData(data) {
       // let { baseInfo, mainChart, bChart, sChart, wChart, tChart, hChart } = data
-      let { baseInfo, mainChart, bChart, sChart, wChart, tChart, hChart } = DATA
-      this.baseInfo = baseInfo
-      this.mainChart = mainChart
-      this.bChart = bChart
-      this.sChart = sChart
-      this.wChart = wChart
-      this.tChart = tChart
-      this.hChart = hChart
+      let {
+        baseInfo,
+        mainChart,
+        bChart,
+        sChart,
+        wChart,
+        tChart,
+        hChart
+      } = DATA;
+      this.baseInfo = baseInfo;
+      this.mainChart = mainChart;
+      this.bChart = bChart;
+      this.sChart = sChart;
+      this.wChart = wChart;
+      this.tChart = tChart;
+      this.hChart = hChart;
       // this.setMap()
     },
     onParamChange(data) {
-      this.wsParam = Object.assign(this.wsParam, data)
-      this.ws.send(JSON.stringify(this.wsParam))
+      this.wsParam = Object.assign(this.wsParam, data);
+      this.ws.send(JSON.stringify(this.wsParam));
     }
   }
-}
+};
 </script>
 
 
