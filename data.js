@@ -167,7 +167,118 @@ let data = {
     xData: {
       d: [-1, 1, 5, 3, 2, 4, 1],
     }
-  }
+  },
+  treeData: [{
+      id: 1220,
+      parentId: 0,
+      name: "电力塔检测",
+      children: [{
+        id: 1221,
+        parentId: 1220,
+        name: "220kV",
+        children: [{
+          id: 2222,
+          parentId: 1221,
+          name: "浙江线",
+          children: [{
+              id: 111, //此id为监测塔id，父级id只要不重复就好，并且子级对应父级
+              parentId: 2222,
+              name: "111号塔",
+              isLast: true, //只有是最后一级时才存在true
+            },
+            {
+              id: 222,
+              parentId: 2222,
+              name: "222号塔",
+              isLast: true //只有是最后一级时才存在true
+            }, {
+              id: 1,
+              parentId: 2222,
+              name: "1号塔",
+              isLast: true //只有是最后一级时才存在true
+            }
+          ]
+        }, {
+          id: 1222,
+          parentId: 1221,
+          name: "云南线",
+          children: [{
+              id: 3226,
+              parentId: 1222,
+              name: "111号塔",
+              isLast: true //只有是最后一级时才存在true
+            },
+            {
+              id: 3227,
+              parentId: 1222,
+              name: "222号塔",
+              isLast: true //只有是最后一级时才存在true
+            }, {
+              id: 3228,
+              parentId: 1222,
+              name: "1号塔",
+              isLast: true //只有是最后一级时才存在true
+            }
+          ]
+        }]
+      }, {
+        id: 221,
+        parentId: 220,
+        name: "1000kV",
+        children: [{
+          id: 5222,
+          parentId: 221,
+          name: "江苏线",
+          children: [{
+              id: 55223,
+              parentId: 5222,
+              name: "55223",
+              isLast: true //只有是最后一级时才存在true
+            },
+            {
+              id: 55224,
+              parentId: 5222,
+              name: "55224",
+              isLast: true //只有是最后一级时才存在true
+            }, {
+              id: 55225,
+              parentId: 5222,
+              name: "55225",
+              isLast: true //只有是最后一级时才存在true
+            }
+          ]
+        }, {
+          id: 6222,
+          parentId: 221,
+          name: "云南线",
+          children: [{
+              id: 66223,
+              parentId: 6222,
+              name: "66223",
+              isLast: true //只有是最后一级时才存在true
+            },
+            {
+              id: 66224,
+              parentId: 6222,
+              name: "66224",
+              isLast: true //只有是最后一级时才存在true
+            }, {
+              id: 66225,
+              parentId: 6222,
+              name: "66225",
+              isLast: true //只有是最后一级时才存在true
+            }
+          ]
+        }]
+      }],
+    },
+    {
+      id: 22221,
+      parentId: 0,
+      name: "高压电站",
+      children: [],
+    },
+  ]
 }
 
 export default data

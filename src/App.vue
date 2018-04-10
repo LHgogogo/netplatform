@@ -191,13 +191,13 @@ input::-webkit-inner-spin-button {
   right: 0;
 }
 .leftCenter {
-  width: 20%;
+  width: 15%;
   height: 50%;
   margin: 20px;
   background-color: rgba(255, 255, 255, 0.2);
   position: fixed;
   bottom: 23%;
-  overflow-y: auto;
+  overflow: auto;
 }
 </style>
 <template>
@@ -237,7 +237,9 @@ input::-webkit-inner-spin-button {
       </div>
     </div>
     <div class="leftCenter" v-if="showM">
-    
+          <div style='height: 100%;' v-if='ztreeDataSource.length>0'>
+           <vue-ztree :list.sync='ztreeDataSource' :func='nodeClick' :is-open='false'></vue-ztree>
+        </div>
     </div>
     <div class="leftBottom" v-if="showM">
       <video width="100%" height="100%" autoplay="autoplay" loop="loop" controls="controls">
@@ -297,6 +299,7 @@ input::-webkit-inner-spin-button {
 <script>
 var moment = require("moment");
 import DATA from "../data.js";
+import vueZtree from "./components/vue-ztree.vue";
 var icon = [
   "path://M876 456H697.5L664 288h100c15.5 0 28-12.5 28-28s-12.5-28-28-28H652.8l-24.6-123C623 82.9 600 64 573.3 64H450.7c-26.7 0-49.7 18.9-54.9 45l-24.5 123H260c-15.5 0-28 12.5-28 28s12.5 28 28 28h100l-33.5 168H148c-15.5 0-28 12.5-28 28s12.5 28 28 28h167.3l-82.8 414.9c-0.2 0.9 0.1 1.8 0 2.7-0.2 2-0.2 3.9 0.1 6 0.2 1.7 0.6 3.3 1.1 5 0.6 1.7 1.2 3.3 2.1 4.9 0.9 1.7 2 3.2 3.3 4.6 0.6 0.7 0.9 1.6 1.6 2.3 0.6 0.6 1.4 0.8 2 1.3 1.4 1.1 2.9 2 4.5 2.9 1.7 0.9 3.4 1.6 5.2 2.1 0.8 0.2 1.5 0.8 2.4 1 0.8 0.2 1.6-0.1 2.5-0.1 0.9 0.1 1.7 0.5 2.6 0.5 1 0 2-0.5 3-0.6 1.8-0.2 3.5-0.5 5.2-1 1.8-0.6 3.5-1.3 5.1-2.2 1.6-0.9 3.1-1.9 4.5-3.1 0.8-0.7 1.8-1 2.5-1.8L512 707.1l231.7 244.1c0.4 0.4 0.9 0.5 1.3 0.9 1.8 1.7 3.9 3.1 6.1 4.2 0.9 0.5 1.7 1.2 2.7 1.5 3.2 1.3 6.6 2.1 10.2 2.1 1.7 0 3.4-0.2 5.1-0.5 0.8-0.1 1.4-0.7 2.2-0.9 2-0.5 3.8-1.3 5.6-2.3 1.5-0.8 2.9-1.6 4.2-2.7 0.7-0.5 1.5-0.7 2.1-1.3 0.7-0.7 1-1.7 1.7-2.4 1.2-1.4 2.3-2.9 3.2-4.5 0.9-1.6 1.6-3.2 2.1-4.9 0.5-1.7 0.9-3.3 1.1-5 0.2-1.9 0.2-3.8 0.1-5.7-0.1-1 0.2-1.9 0-2.8L708.7 512H876c15.5 0 28-12.5 28-28s-12.5-28-28-28zM451.3 120h121.5l22.4 112H428.8l22.5-112z m-33.7 168h188.8l33.7 168H383.9l33.7-168zM620 512L512 625.8 404 512h216zM306.5 842.3L364.7 552l108.7 114.5-166.9 175.8z m352.8-290.4l58.2 290.4-166.9-175.9 108.7-114.5z"
 ];
@@ -319,7 +322,8 @@ export default {
         sFirst: true
       },
       wsParam: {},
-      showM: false
+      showM: false,
+      ztreeDataSource: []
     };
   },
   created() {
@@ -1516,7 +1520,8 @@ export default {
         sChart,
         wChart,
         tChart,
-        hChart
+        hChart,
+        treeData
       } = DATA;
       this.baseInfo = baseInfo;
       this.mainChart = mainChart;
@@ -1525,12 +1530,25 @@ export default {
       this.wChart = wChart;
       this.tChart = tChart;
       this.hChart = hChart;
+      this.ztreeDataSource = treeData;
       // this.setMap()
     },
     onParamChange(data) {
       this.wsParam = Object.assign(this.wsParam, data);
       this.ws.send(JSON.stringify(this.wsParam));
+    },
+    // 点击节点
+    nodeClick: function(m, parent, trees) {
+      // console.log(m);
+      // console.log(parent);
+      // console.log(trees);
+      if (m.isLast) {
+        this.id = m.id;
+      }
     }
+  },
+  components: {
+    vueZtree
   }
 };
 </script>
